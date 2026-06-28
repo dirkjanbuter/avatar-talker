@@ -1,13 +1,18 @@
+Here is the final, updated `README.md` text with the **WordPress plugin** distinction clearly highlighted in the introduction and setup steps.
+
+---
+
 # Avatar Talker (v1.0.0)
 
-**Avatar Talker** is a WebGL-powered 3D talking avatar plugin driven entirely by x.ai. It listens to user voice input, processes conversations through Grok, and speaks back with real-time, procedurally generated lip-syncing.
+**Avatar Talker** is a WebGL-powered 3D talking avatar **WordPress plugin** driven entirely by x.ai. It listens to user voice input, processes conversations through Grok, and speaks back with real-time, procedurally generated lip-syncing.
 
-Built with **Three.js** on the frontend and secured with a **PHP server-side proxy**, it ensures your x.ai API keys remain 100% safe from the browser.
+Built with **Three.js** on the frontend and secured with a **PHP server-side proxy**, it ensures your x.ai API keys remain 100% safe from the browser environment.
 
 ---
 
 ## ✨ Features
 
+* 🔌 **WordPress Native:** Easy shortcode deployment and a clean backend admin settings page.
 * 🤖 **Grok-Powered Intellect:** Persistent conversation history, custom models, and fully configurable system prompts.
 * 🎙️ **Voice-to-Voice Loop:** Hold-to-speak voice input (via x.ai STT) $\rightarrow$ Grok processing $\rightarrow$ Voice output (via x.ai TTS).
 * 👄 **Real-Time Lip-Sync:** Web Audio API decodes audio on the fly. Amplitude (RMS) + text-to-phoneme estimation dynamically drive **15 ARKit viseme morph targets** (e.g., `jawOpen`, `mouthOpen`, `viseme_aa`, `viseme_PP`). No external phoneme mapping service required!
@@ -20,7 +25,7 @@ Built with **Three.js** on the frontend and secured with a **PHP server-side pro
 
 ## 🚀 Shortcode Usage
 
-Deploy the avatar anywhere on your site using simple shortcodes:
+Deploy the avatar anywhere on your WordPress site using simple shortcodes:
 
 ```wordpress
 [avatar_talker]
@@ -30,13 +35,14 @@ Deploy the avatar anywhere on your site using simple shortcodes:
 
 ---
 
-## 🛠️ Admin Setup
+## 🛠️ WordPress Admin Setup
 
-1. Navigate to **Avatar Talker** $\rightarrow$ **Settings** in your dashboard.
-2. Enter your x.ai API key (generated via [console.x.ai](https://console.x.ai)).
-3. Define your custom **System Prompt** (use the `{name}` placeholder to dynamically insert the avatar's name).
-4. Select your preferred Grok model, voice profile, and language.
-5. Save changes and paste the `[avatar_talker]` shortcode onto any page or post.
+1. Install and activate the plugin in your WordPress dashboard.
+2. Navigate to **Avatar Talker** $\rightarrow$ **Settings**.
+3. Enter your x.ai API key (generated via [console.x.ai](https://console.x.ai)).
+4. Define your custom **System Prompt** (use the `{name}` placeholder to dynamically insert the avatar's name).
+5. Select your preferred Grok model, voice profile, and language.
+6. Save changes and paste the `[avatar_talker]` shortcode onto any page, post, or widget area.
 
 ---
 
@@ -73,6 +79,15 @@ The frontend utilizes the Web Audio API's `AnalyserNode` to sample playback.
 
 ---
 
-## 📄 License
+## 📄 License & Asset Attribution
 
-This project is licensed under **The Unlicense** — meaning it's completely dedicated to the public domain. You can copy, modify, publish, use, compile, sell, or distribute this software in any form, for any purpose, commercial or non-commercial, without restriction.
+### Codebase
+
+This software is licensed under **The Unlicense** — meaning the source code is completely dedicated to the public domain. You can copy, modify, publish, use, compile, sell, or distribute this code in any form, for any purpose, commercial or non-commercial, without restriction.
+
+### 3D Avatar Model
+
+The default `avatar.glb` included with this plugin was generated via **Avaturn**.
+
+* **License:** Free for non-commercial personal use.
+* **Commercial Use:** If you intend to use this plugin for commercial purposes, you must acquire a commercial license from [Avaturn.me](https://www.google.com/search?q=https%3A%2F%2Favaturn.me), or swap out the default file with your own custom, commercially-licensed `.glb` asset.
