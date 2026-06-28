@@ -22,3 +22,18 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
+
+========================================================================
+ASSET EXCEPTION: AVATURN 3D MODEL LICENSE
+========================================================================
+The public domain dedication above applies strictly to the source code 
+and software architecture of this repository. 
+
+The default 3D asset file (`avatar.glb`) included in this repository 
+was generated using Avaturn (https://avaturn.me). 
+
+* This asset is free to use for personal, non-commercial purposes.
+* If you intend to use this repository or the included 3D model for 
+  commercial applications, you must obtain a commercial license from 
+  Avaturn, or replace `avatar.glb` with your own custom, commercially-
+  licensed 3D asset.
