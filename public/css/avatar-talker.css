@@ -1,0 +1,339 @@
+/* ════════════════════════════════════════════
+   Avatar Talker — Cinematic Dark UI
+════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+
+#at-root {
+  --bg:        #080a10;
+  --surface:   #0f111a;
+  --surface2:  #171a28;
+  --lift:      #1e2235;
+  --border:    #262a40;
+  --accent:    #6c5fff;
+  --accent2:   #3ecfff;
+  --green:     #3dd68c;
+  --red:       #f56565;
+  --yellow:    #fbbf24;
+  --text:      #e2e6f8;
+  --dim:       #6c739e;
+  --r:    10px;
+  --r-sm: 6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  box-sizing: border-box;
+  display: block;
+}
+#at-root *, #at-root *::before, #at-root *::after { box-sizing: inherit; }
+
+/* ── Wrapper ── */
+.at-wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* ── 3D Viewport ── */
+.at-viewport {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+}
+.at-viewport canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Loader ── */
+.at-loader {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--bg);
+  z-index: 20;
+  gap: 14px;
+  transition: opacity .4s;
+}
+.at-spinner {
+  width: 42px; height: 42px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: at-spin .75s linear infinite;
+}
+@keyframes at-spin { to { transform:rotate(360deg); } }
+.at-loader-label { color: var(--dim); font-size: 13px; }
+
+/* ── Status badge ── */
+.at-status {
+  position: absolute;
+  top: 14px; left: 14px;
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(15,17,26,.85);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 5px 12px 5px 8px;
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+}
+.at-status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background .3s;
+}
+.at-dot-idle   { background: var(--dim); }
+.at-dot-rec    { background: var(--red);    animation: at-pulse .7s ease-in-out infinite; }
+.at-dot-proc   { background: var(--yellow); animation: at-pulse 1s ease-in-out infinite; }
+.at-dot-think  { background: var(--accent); animation: at-pulse .9s ease-in-out infinite; }
+.at-dot-speak  { background: var(--green);  animation: at-pulse .6s ease-in-out infinite; }
+@keyframes at-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── Camera buttons ── */
+.at-cambtns {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  display: flex; gap: 6px;
+}
+.at-cambtn {
+  width: 36px; height: 36px;
+  background: rgba(15,17,26,.82);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: border-color .15s, background .15s;
+}
+.at-cambtn:hover { border-color: var(--accent2); background: rgba(62,207,255,.12); }
+
+/* ── Chat panel ── */
+.at-panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.at-header {
+  padding: 14px 16px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.at-avatar-info { display: flex; align-items: center; gap: 10px; }
+.at-avatar-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(61,214,140,.6);
+  animation: at-pulse 2s ease-in-out infinite;
+}
+.at-avatar-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--text);
+}
+.at-avatar-sub { font-size: 11px; color: var(--dim); margin-top: 1px; }
+.at-clear-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--dim);
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .15s;
+}
+.at-clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── Messages ── */
+.at-messages {
+  flex: 1 1 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.at-messages::-webkit-scrollbar { width: 3px; }
+.at-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Bubbles ── */
+.at-bubble {
+  display: flex;
+  max-width: 88%;
+}
+.at-bubble-user     { justify-content: flex-end; align-self: flex-end; }
+.at-bubble-assistant{ justify-content: flex-start; align-self: flex-start; }
+.at-greeting        { max-width: 100%; }
+
+.at-bubble-text {
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.at-bubble-user .at-bubble-text {
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.at-bubble-assistant .at-bubble-text {
+  background: var(--lift);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+.at-greeting .at-bubble-text {
+  background: rgba(108,95,255,.10);
+  border: 1px solid rgba(108,95,255,.25);
+  color: var(--text);
+  border-radius: 14px;
+}
+
+/* ── Error messages ── */
+.at-error-msg {
+  background: rgba(245,101,101,.10);
+  border: 1px solid rgba(245,101,101,.3);
+  border-radius: var(--r-sm);
+  color: var(--red);
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+/* ── Input area ── */
+.at-input-area {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.at-text-row {
+  display: flex;
+  gap: 6px;
+}
+.at-text-input {
+  flex: 1;
+  background: var(--lift);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .18s;
+}
+.at-text-input:focus { border-color: var(--accent); }
+.at-text-input::placeholder { color: var(--dim); }
+.at-send-btn {
+  background: var(--accent);
+  border: none;
+  border-radius: var(--r-sm);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .15s;
+  flex-shrink: 0;
+}
+.at-send-btn:hover { opacity: .85; }
+
+/* ── Mic button ── */
+.at-mic-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.at-mic-btn {
+  flex: 1;
+  background: var(--lift);
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  color: var(--text);
+  padding: 11px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all .18s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.at-mic-btn:hover { border-color: var(--accent); background: rgba(108,95,255,.12); }
+.at-mic-btn.at-mic-active {
+  background: rgba(245,101,101,.15);
+  border-color: var(--red);
+  color: var(--red);
+  animation: at-mic-pulse 1s ease-in-out infinite;
+}
+@keyframes at-mic-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,101,101,.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(245,101,101,0); }
+}
+.at-mic-icon { font-size: 18px; }
+
+/* ── Audio waveform ── */
+.at-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 28px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.at-wave.at-wave-active { opacity: 1; }
+.at-bar {
+  width: 3px;
+  height: 4px;
+  background: var(--accent2);
+  border-radius: 2px;
+  animation: at-wave-anim 0s ease-in-out infinite;
+}
+.at-wave-active .at-bar {
+  animation-duration: .6s;
+}
+@keyframes at-wave-anim {
+  0%,100% { height: 4px; }
+  50%      { height: 22px; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .at-wrap { flex-direction: column; }
+  .at-panel { width: 100%; max-height: 52%; border-left: none; border-top: 1px solid var(--border); }
+  .at-viewport { height: 48%; }
+}
+
+/* ── WP resets ── */
+#at-root button { line-height: normal; }
+.at-hidden { display: none; }
