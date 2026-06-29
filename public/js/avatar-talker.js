@@ -107,6 +107,7 @@ let gltfScene   = null;
 let meshMap     = {};
 let matMap      = {};
 let boneMap     = {};
+let mixer       = null; 
 
 // Web Audio
 let audioCtx    = null;
@@ -208,7 +209,7 @@ function loadAvatar() {
       gltfScene.traverse(obj => {
       	
         // ── AVATURN DIRECT X-AXIS DOWN FIX (OPTIMIZED) ──
-      const leftArm  = boneMap['LeftArm'];
+      /*const leftArm  = boneMap['LeftArm'];
       const rightArm = boneMap['RightArm'];
 
       if (leftArm) {
@@ -230,7 +231,7 @@ function loadAvatar() {
           
           // Reduced from -0.15 to -0.05 to bring the arm closer to the body
           rightArm.rotation.y = -0.05;
-      }
+      }*/
       
         obj.castShadow = obj.receiveShadow = true;
         if (obj.isMesh || obj.isSkinnedMesh) {
@@ -243,8 +244,25 @@ function loadAvatar() {
         if (obj.isBone) boneMap[obj.name] = obj;
       });
 
-      // DO NOT start animation mixer — it overwrites morph weights every frame
       scene.add(gltfScene);
+
+// Start the mixer ONLY if there are animations, but strip all morph tracks
+// so blink and viseme morphs are never overwritten
+if (gltf.animations && gltf.animations.length > 0) {
+  mixer = new THREE.AnimationMixer(gltfScene);
+
+  // Clone first animation, remove any morph influence tracks
+  const clip = gltf.animations[0].clone();
+  clip.tracks = clip.tracks.filter(track => {
+    // Skip tracks that drive .morphTargetInfluences
+    return !track.name.includes('.morphTargetInfluences');
+  });
+
+  if (clip.tracks.length > 0) {
+    const action = mixer.clipAction(clip);
+    action.play();
+  }
+}
 
       // Zero all morphs (clear any baked-in values)
       Object.values(meshMap).forEach(mesh => {
@@ -395,7 +413,7 @@ function animate() {
 
   controls.autoRotate = false;
   controls.update();
-
+  if (mixer) mixer.update(delta); 
   updateBlink(delta);
 
   /* ── Audio amplitude → viseme ── */
