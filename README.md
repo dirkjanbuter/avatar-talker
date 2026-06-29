@@ -1,7 +1,3 @@
-Here is the final, updated `README.md` text with the **WordPress plugin** distinction clearly highlighted in the introduction and setup steps.
-
----
-
 # Avatar Talker (v1.0.0)
 
 **Avatar Talker** is a WebGL-powered 3D talking avatar **WordPress plugin** driven entirely by x.ai. It listens to user voice input, processes conversations through Grok, and speaks back with real-time, procedurally generated lip-syncing.
