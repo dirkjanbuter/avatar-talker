@@ -235,6 +235,7 @@ function loadAvatar() {
       
         obj.castShadow = obj.receiveShadow = true;
         if (obj.isMesh || obj.isSkinnedMesh) {
+          obj.frustumCulled = false;  // prevent disappearing when camera zooms close
           obj.material = Array.isArray(obj.material)
             ? obj.material.map(m => { const c = m.clone(); c.vertexColors = false; return c; })
             : (() => { const c = obj.material.clone(); c.vertexColors = false; return c; })();
