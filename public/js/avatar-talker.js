@@ -145,28 +145,35 @@ function initScene(container) {
   controls.maxPolarAngle   = Math.PI * 0.85;
   controls.update();
 
-  /* Lighting — portrait / studio style */
-  scene.add(new THREE.AmbientLight(0xfff4e0, 0.30));
 
-  const key = new THREE.DirectionalLight(0xfff8f0, 1.9);
-  key.position.set(0.8, 2.5, 1.8);
+  /* Lighting — soft portrait / studio style */
+  // INCREASED: Boost base ambient light to softly illuminate shadow areas everywhere
+  scene.add(new THREE.AmbientLight(0xfff4e0, 0.65));
+
+  // MODIFIED: Lowered intensity, adjusted angle slightly closer to camera axis to minimize deep side shadows
+  const key = new THREE.DirectionalLight(0xfff8f0, 1.4);
+  key.position.set(0.5, 2.0, 1.8); 
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.near  = 0.5; key.shadow.camera.far = 8;
   key.shadow.camera.left  = key.shadow.camera.bottom = -1;
   key.shadow.camera.right = key.shadow.camera.top    =  1;
-  key.shadow.bias = -0.001;
+  
+  // ADJUSTED: Increase shadow bias slightly to prevent artifacting, and soften shadow maps if needed
+  key.shadow.bias = -0.0005; 
   scene.add(key);
 
-  const fill = new THREE.DirectionalLight(0xb0ccff, 0.55);
-  fill.position.set(-1.5, 1.2, 0.5);
+  // INCREASED: Stronger fill light from the opposite side to actively eliminate dark face shadows
+  const fill = new THREE.DirectionalLight(0xb0ccff, 0.95);
+  fill.position.set(-1.5, 1.2, 0.8);
   scene.add(fill);
 
-  const rim = new THREE.DirectionalLight(0xffffff, 0.38);
+  // OPTIONAL: Slightly boosted rim/bounce lights to separate the avatar cleanly from the dark background
+  const rim = new THREE.DirectionalLight(0xffffff, 0.45);
   rim.position.set(0, 2, -2);
   scene.add(rim);
 
-  const bounce = new THREE.PointLight(0xffe8cc, 0.35, 3);
+  const bounce = new THREE.PointLight(0xffe8cc, 0.45, 3);
   bounce.position.set(0, 0.2, 0.9);
   scene.add(bounce);
 
